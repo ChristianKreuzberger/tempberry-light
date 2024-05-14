@@ -17,6 +17,15 @@ Content-Type: application/json
 
 ###
 
+# Post for sensor id 3
+POST http://localhost:5000/sensor_data
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"sensor_id": 3, "temperature": 11.0, "humidity": 25.0}
+
+###
 # Get Rooms
 GET http://localhost:5000/room_sensor_id_map
 

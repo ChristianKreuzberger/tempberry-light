@@ -1,5 +1,6 @@
 from flask import Flask, json, request
 from datetime import datetime
+from flask_cors import CORS, cross_origin
 
 ROOM_DATA_FILE = 'rooms.json'
 
@@ -7,7 +8,7 @@ sensor_data = {}
 
 room_sensor_id_map = {}
 
-api = Flask(__name__)
+api = Flask(__name__, static_folder='static', static_url_path='')
 
 def write_room_data_to_file():
   with open(ROOM_DATA_FILE, "w") as outfile:
@@ -17,17 +18,19 @@ def load_room_data_to_file():
   try:
     with open(ROOM_DATA_FILE, "r") as infile:
       data = "\n".join(infile.readlines())
-      room_sensor_id_map = json.loads(data)
+      return json.loads(data)
   except FileNotFoundError:
     print('Skipping loading as ' + ROOM_DATA_FILE + ' does not exist')
 
 # Get All Room Names
 @api.route('/room_sensor_id_map', methods=['GET'])
+@cross_origin(origin='*')
 def get_room_sensor_id_map():
   return json.dumps(room_sensor_id_map)
 
 # Add a room to the sensor id map
 @api.route('/room_sensor_id_map', methods=['POST'])
+@cross_origin(origin='*')
 def post_room_sensor_id_map():
   data = request.json
   assert data['sensor_id'] != None, "Missing sensor_id"
@@ -41,10 +44,12 @@ def post_room_sensor_id_map():
 
 # Get All Live Temperature Data 
 @api.route('/live_temperatures', methods=['GET'])
+@cross_origin(origin='*')
 def get_temperatures():
   return json.dumps(sensor_data)
 
 @api.route('/sensor_data', methods=['POST'])
+@cross_origin(origin='*')
 def post_temperatures():
   data = request.json
   assert data['sensor_id'] != None, "Missing sensor_id"
@@ -54,10 +59,18 @@ def post_temperatures():
   sensor_data[data['sensor_id']]['last_updated'] = datetime.now()
   return json.dumps({"success": True}), 201
 
+
+@api.route('/')
+def root():
+  return api.send_static_file('index.html')
+
 # host static files (frontend)
-# url_for('static', filename='style.css')
+@api.route('/<path:path>')
+def static_file(path):
+    print("PATH=" + path)
+    return api.send_static_file(path)
 
 
 if __name__ == '__main__':
-  load_room_data_to_file()
+  room_sensor_id_map = load_room_data_to_file()
   api.run(debug=True)
