@@ -1,0 +1,48 @@
+# post for sensor id 1
+POST http://localhost:5000/sensor_data
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"sensor_id": 1, "temperature": 25.0, "humidity": 10.0}
+
+###
+# Post for sensor id 2
+POST http://localhost:5000/sensor_data
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"sensor_id": 2, "temperature": 11.0, "humidity": 25.0}
+
+###
+
+# Get Rooms
+GET http://localhost:5000/room_sensor_id_map
+
+###
+# Create a Room
+POST http://localhost:5000/room_sensor_id_map
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"sensor_id": 1, "room_name": "Living room"}
+
+
+###
+# Create another Room
+POST http://localhost:5000/room_sensor_id_map
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"sensor_id": 2, "room_name": "Outside"}
+
+###
+
+# Get current data
+GET http://localhost:5000/live_temperatures
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
