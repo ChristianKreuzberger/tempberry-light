@@ -73,4 +73,4 @@ def static_file(path):
 
 if __name__ == '__main__':
   room_sensor_id_map = load_room_data_to_file()
-  api.run(debug=True)
+  api.run(debug=True, host='0.0.0.0')
