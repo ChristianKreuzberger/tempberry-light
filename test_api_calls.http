@@ -55,3 +55,14 @@ GET http://localhost:5000/live_temperatures
 Accept: application/json
 Cache-Control: no-cache
 Content-Type: application/json
+
+
+
+###
+# Create a Room
+POST http://chriberry-pi:5000/room_sensor_id_map
+Accept: application/json
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"sensor_id": 148, "room_name": "Büro (DG)"}

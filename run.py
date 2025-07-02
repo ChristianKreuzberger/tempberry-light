@@ -70,6 +70,38 @@ def static_file(path):
     print("PATH=" + path)
     return api.send_static_file(path)
 
+# Add a room to the sensor id map (Create)
+@api.route('/rooms', methods=['POST'])
+@cross_origin(origin='*')
+def create_room():
+    data = request.json
+    assert data['id'] is not None, "Missing id"
+    assert data['name'] is not None, "Missing name"
+    room_sensor_id_map[data['id']] = data['name']
+    write_room_data_to_file()
+    return json.dumps(room_sensor_id_map), 201
+
+# Update a room (Update)
+@api.route('/rooms/<id>', methods=['PUT'])
+@cross_origin(origin='*')
+def update_room(id):
+    data = request.json
+    assert data['name'] is not None, "Missing name"
+    if id not in room_sensor_id_map:
+        return json.dumps({'error': 'Room not found'}), 404
+    room_sensor_id_map[id] = data['name']
+    write_room_data_to_file()
+    return json.dumps(room_sensor_id_map)
+
+# Delete a room (Delete)
+@api.route('/rooms/<id>', methods=['DELETE'])
+@cross_origin(origin='*')
+def delete_room(id):
+    if id not in room_sensor_id_map:
+        return json.dumps({'error': 'Room not found'}), 404
+    del room_sensor_id_map[id]
+    write_room_data_to_file()
+    return json.dumps(room_sensor_id_map)
 
 if __name__ == '__main__':
   room_sensor_id_map = load_room_data_to_file()

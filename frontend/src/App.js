@@ -1,6 +1,7 @@
 import './App.css';
 import { fetchLiveData, fetchRoomMapping } from './TempberryAPI';
 import { useEffect, useState } from 'react';
+import RoomManager from './RoomManager';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         }
         {JSON.stringify(roomData)}
       </div>
+      <RoomManager />
     </div>
   );
 }

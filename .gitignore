@@ -1,3 +1,6 @@
 venv
 rooms.json
 node_modules
+
+# Static files
+static/static/**
