@@ -20,28 +20,30 @@ function App() {
     // data fetching here
     loadData();
     loadLiveData();
-    setInterval(loadLiveData, 10000);
+    const interval = setInterval(loadLiveData, 10000);
+    return () => clearInterval(interval);
   }, []);
-
-  // reload every 10 seconds
-  // setInterval(loadLiveData, 10000);
 
   return (
     <div className="App">
       <header className="App-header">
+        <span role="img" aria-label="thermometer" style={{marginRight: '0.5em'}}>🌡️</span>
         TempBerry Light
       </header>
-      <div>
-        {
-          Object.keys(liveData).map((key, index) => ( 
-            <div key={index}>
-              <h3>{roomData[liveData[key]['sensor_id']] || "Sensor " + liveData[key]['sensor_id']}</h3>
-              {liveData[key]['temperature']} °C, {liveData[key]['humidity']} %<br />
-              Last Updated at {liveData[key]['last_updated']}<br />
-            </div> 
-          ))
-        }
-        {JSON.stringify(roomData)}
+      <div className="sensor-list">
+        {Object.keys(liveData).length === 0 && (
+          <div className="no-sensors">No sensor data available.</div>
+        )}
+        {Object.keys(liveData).map((key, index) => (
+          <div className="sensor-card" key={index}>
+            <h3>{roomData[liveData[key]['sensor_id']] || `Sensor ${liveData[key]['sensor_id']}`}</h3>
+            <div className="sensor-values">
+              <span className="temp">{liveData[key]['temperature']} °C</span>
+              <span className="humidity">{liveData[key]['humidity']} %</span>
+            </div>
+            <div className="last-updated">Last Updated: {liveData[key]['last_updated']}</div>
+          </div>
+        ))}
       </div>
       <RoomManager />
     </div>

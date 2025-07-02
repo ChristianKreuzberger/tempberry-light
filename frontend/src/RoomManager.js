@@ -42,6 +42,11 @@ function RoomManager() {
     loadRooms();
   };
 
+  const handleCancel = () => {
+    setEditingId(null);
+    setNewRoom({ id: '', name: '' });
+  };
+
   return (
     <div className="room-manager">
       <h2>Room Manager</h2>
@@ -62,14 +67,20 @@ function RoomManager() {
           required
         />
         <button type="submit">{editingId ? 'Update' : 'Add'}</button>
-        {editingId && <button type="button" onClick={() => { setEditingId(null); setNewRoom({ id: '', name: '' }); }}>Cancel</button>}
+        {editingId && (
+          <button type="button" onClick={handleCancel} className="cancel-btn">Cancel</button>
+        )}
       </form>
       <ul className="room-list">
-        {Object.entries(rooms).map(([id, name]) => (
+        {Object.keys(rooms).length === 0 && <li className="no-rooms">No rooms defined.</li>}
+        {Object.keys(rooms).map((id) => (
           <li key={id}>
-            <span>{id}: {name}</span>
-            <button onClick={() => handleEdit(id)}>Edit</button>
-            <button onClick={() => handleDelete(id)}>Delete</button>
+            <span className="room-id">{id}</span>
+            <span className="room-name">{rooms[id]}</span>
+            <span>
+              <button onClick={() => handleEdit(id)}>Edit</button>
+              <button onClick={() => handleDelete(id)} className="delete-btn">Delete</button>
+            </span>
           </li>
         ))}
       </ul>
