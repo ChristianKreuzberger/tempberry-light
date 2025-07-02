@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './RoomManager.css';
-
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+import { fetchRoomMapping, createRoom, updateRoom, deleteRoom } from './TempberryAPI';
 
 function RoomManager() {
   const [rooms, setRooms] = useState({});
@@ -9,12 +8,11 @@ function RoomManager() {
   const [newRoom, setNewRoom] = useState({ id: '', name: '' });
 
   useEffect(() => {
-    fetchRooms();
+    loadRooms();
   }, []);
 
-  const fetchRooms = async () => {
-    const res = await fetch(`${API_URL}/room_sensor_id_map`);
-    const data = await res.json();
+  const loadRooms = async () => {
+    const data = await fetchRoomMapping();
     setRooms(data);
   };
 
@@ -28,28 +26,20 @@ function RoomManager() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`${API_URL}/rooms/${id}`, { method: 'DELETE' });
-    fetchRooms();
+    await deleteRoom(id);
+    loadRooms();
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
     if (editingId) {
-      await fetch(`${API_URL}/rooms/${editingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newRoom.name })
-      });
+      await updateRoom(editingId, newRoom.name);
     } else {
-      await fetch(`${API_URL}/rooms`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: newRoom.id, name: newRoom.name })
-      });
+      await createRoom(newRoom.id, newRoom.name);
     }
     setEditingId(null);
     setNewRoom({ id: '', name: '' });
-    fetchRooms();
+    loadRooms();
   };
 
   return (

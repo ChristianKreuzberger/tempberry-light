@@ -1,4 +1,3 @@
-
 const getBaseUrl = () => {
     if (window.location.host.toString().indexOf('localhost') >= 0) {
         return 'http://localhost:5000';
@@ -20,3 +19,25 @@ export const fetchRoomMapping = () => {
 
     return fetch(getBaseUrl() + '/room_sensor_id_map').then((response) => response.json());
 }
+
+export const createRoom = (id, name) => {
+    return fetch(getBaseUrl() + '/rooms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, name })
+    }).then(res => res.json());
+};
+
+export const updateRoom = (id, name) => {
+    return fetch(getBaseUrl() + `/rooms/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+    }).then(res => res.json());
+};
+
+export const deleteRoom = (id) => {
+    return fetch(getBaseUrl() + `/rooms/${id}`, {
+        method: 'DELETE'
+    }).then(res => res.json());
+};

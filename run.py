@@ -11,14 +11,17 @@ room_sensor_id_map = {}
 api = Flask(__name__, static_folder='static', static_url_path='')
 
 def write_room_data_to_file():
+  # Ensure all keys are strings before saving
   with open(ROOM_DATA_FILE, "w") as outfile:
-    outfile.write(json.dumps(room_sensor_id_map))
+    outfile.write(json.dumps({str(k): v for k, v in room_sensor_id_map.items()}))
 
 def load_room_data_to_file():
   try:
     with open(ROOM_DATA_FILE, "r") as infile:
       data = "\n".join(infile.readlines())
-      return json.loads(data)
+      loaded = json.loads(data)
+      # Ensure all keys are strings
+      return {str(k): v for k, v in loaded.items()}
   except FileNotFoundError:
     print('Skipping loading as ' + ROOM_DATA_FILE + ' does not exist')
 
@@ -77,7 +80,7 @@ def create_room():
     data = request.json
     assert data['id'] is not None, "Missing id"
     assert data['name'] is not None, "Missing name"
-    room_sensor_id_map[data['id']] = data['name']
+    room_sensor_id_map[str(data['id'])] = data['name']
     write_room_data_to_file()
     return json.dumps(room_sensor_id_map), 201
 
@@ -87,6 +90,7 @@ def create_room():
 def update_room(id):
     data = request.json
     assert data['name'] is not None, "Missing name"
+    id = str(id)
     if id not in room_sensor_id_map:
         return json.dumps({'error': 'Room not found'}), 404
     room_sensor_id_map[id] = data['name']
@@ -97,6 +101,7 @@ def update_room(id):
 @api.route('/rooms/<id>', methods=['DELETE'])
 @cross_origin(origin='*')
 def delete_room(id):
+    id = str(id)
     if id not in room_sensor_id_map:
         return json.dumps({'error': 'Room not found'}), 404
     del room_sensor_id_map[id]
