@@ -4,7 +4,7 @@
   background: #fff;
   border-radius: 12px;
   padding: 2rem 1.2rem;
-  max-width: 700px;
+  max-width: 560px;
   width: 100%;
   margin: 2rem auto 0 auto;
   box-shadow: 0 2px 12px rgba(25, 118, 210, 0.08);
@@ -28,10 +28,11 @@
 }
 .room-form input {
   flex: 1;
-  padding: 0.5rem 0.7rem;
+  padding: 0.32rem 0.5rem;
+  font-size: 1rem;
+  max-width: 120px;
   border: 1px solid #b0bec5;
   border-radius: 4px;
-  font-size: 1rem;
   background: #f4f6fa;
   transition: border 0.2s;
   box-sizing: border-box;
@@ -41,7 +42,7 @@
   outline: none;
 }
 .room-form button {
-  padding: 0.5rem 1.1rem;
+  padding: 0.32rem 0.8rem;
   border: none;
   background: #1976d2;
   color: #fff;
@@ -136,4 +137,63 @@
 }
 .room-manager-toggle:hover {
   background: #1565c0;
+}
+
+/* Dark theme for Room Manager */
+.App.dark .room-manager {
+  background: #232a36;
+  color: #e0e6f0;
+  box-shadow: 0 2px 12px rgba(30, 40, 60, 0.18);
+}
+.App.dark .room-manager h2 {
+  color: #74b9ff;
+}
+.App.dark .room-form input {
+  background: #181c24;
+  color: #e0e6f0;
+  border: 1px solid #3a4660;
+}
+.App.dark .room-form input:focus {
+  border: 1.5px solid #74b9ff;
+}
+.App.dark .room-form button {
+  background: #3a4660;
+  color: #e0e6f0;
+}
+.App.dark .room-form button:hover {
+  background: #232a36;
+}
+.App.dark .room-form .cancel-btn {
+  background: #888;
+  color: #fff;
+}
+.App.dark .room-list li {
+  border-bottom: 1px solid #2c3442;
+}
+.App.dark .room-list .room-id {
+  color: #74b9ff;
+}
+.App.dark .room-list button {
+  background: #3a4660;
+  color: #e0e6f0;
+}
+.App.dark .room-list button:hover {
+  background: #232a36;
+}
+.App.dark .room-list .delete-btn {
+  background: #e17055;
+}
+.App.dark .room-list .delete-btn:hover {
+  background: #c0392b;
+}
+.App.dark .no-rooms {
+  color: #b2becd;
+}
+.App.dark .room-manager-toggle {
+  background: #3a4660;
+  color: #e0e6f0;
+  box-shadow: 0 1px 4px rgba(30, 40, 60, 0.18);
+}
+.App.dark .room-manager-toggle:hover {
+  background: #232a36;
 }
