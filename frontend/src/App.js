@@ -2,6 +2,7 @@ import './App.css';
 import { fetchLiveData, fetchRoomMapping } from './TempberryAPI';
 import { useEffect, useState } from 'react';
 import RoomManager from './RoomManager';
+import { WiThermometer, WiHumidity } from 'react-icons/wi';
 
 
 function App() {
@@ -38,8 +39,14 @@ function App() {
           <div className="sensor-card" key={index}>
             <h3>{roomData[liveData[key]['sensor_id']] || `Sensor ${liveData[key]['sensor_id']}`}</h3>
             <div className="sensor-values">
-              <span className="temp">{liveData[key]['temperature']} °C</span>
-              <span className="humidity">{liveData[key]['humidity']} %</span>
+              <span className="temp">
+                <WiThermometer style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+                {liveData[key]['temperature']} °C
+              </span>
+              <span className="humidity">
+                <WiHumidity style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+                {liveData[key]['humidity']} %
+              </span>
             </div>
             <div className="last-updated">Last Updated: {liveData[key]['last_updated']}</div>
           </div>
