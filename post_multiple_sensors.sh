@@ -24,7 +24,7 @@ for entry in "${sensors[@]}"; do
     -H "Accept: application/json" \
     -H "Cache-Control: no-cache" \
     -H "Content-Type: application/json" \
-    -d '{"sensor_id": '"$sensor_id"', "temperature": '"$temperature"', "humidity": '"$humidity"'}'
+    -d '{"sensor_id": '$sensor_id', "temperature": '"$temperature"', "humidity": '"$humidity"'}'
   echo "Posted sensor_id $sensor_id"
   sleep 1
 done

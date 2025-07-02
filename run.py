@@ -58,8 +58,8 @@ def post_temperatures():
   assert data['sensor_id'] != None, "Missing sensor_id"
   assert data['temperature'] != None, "Missing temperature"
   assert data['humidity'] != None, "Missing humidity"
-  sensor_data[data['sensor_id']] = data
-  sensor_data[data['sensor_id']]['last_updated'] = datetime.now()
+  sensor_data[str(data['sensor_id'])] = data
+  sensor_data[str(data['sensor_id'])]['last_updated'] = datetime.now()
   return json.dumps({"success": True}), 201
 
 
