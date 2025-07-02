@@ -8,6 +8,7 @@ import { WiThermometer, WiHumidity } from 'react-icons/wi';
 function App() {
   const [roomData, setRoomData] = useState({});
   const [liveData, setLiveData] = useState({});
+  const [theme, setTheme] = useState('dark');
 
   const loadLiveData = async () => {
     setLiveData(await fetchLiveData());
@@ -25,11 +26,19 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Toggle theme handler
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <header className="App-header">
         <span role="img" aria-label="thermometer" style={{marginRight: '0.5em'}}>🌡️</span>
-        TempBerry Light
+        TempBerry
+        <button className="theme-toggle" onClick={toggleTheme} style={{marginLeft: '1em'}}>
+          {theme === 'dark' ? '🌙 Dark' : '☀️ Light'}
+        </button>
       </header>
       <div className="sensor-list">
         {Object.keys(liveData).length === 0 && (

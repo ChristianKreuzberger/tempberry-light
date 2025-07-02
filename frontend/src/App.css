@@ -53,7 +53,7 @@
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(25, 118, 210, 0.08);
-  padding: 1.5rem 2rem;
+  padding: 0.5rem 0.7rem;
   min-width: 220px;
   max-width: 260px;
   display: flex;
@@ -64,26 +64,113 @@
 .sensor-card:hover {
   box-shadow: 0 4px 20px rgba(25, 118, 210, 0.15);
 }
+.sensor-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
+}
 .sensor-values {
-  font-size: 1.2rem;
-  margin: 0.5rem 0 0.5rem 0;
+  font-size: 1.12rem;
+  margin: 0.2rem 0 0.2rem 0;
   display: flex;
-  gap: 1.5rem;
+  gap: 0.7rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
-.temp {
-  color: #e53935;
-  font-weight: 500;
-}
-.humidity {
-  color: #1976d2;
+.temp, .humidity {
+  display: flex;
+  align-items: center;
+  gap: 2px;
   font-weight: 500;
 }
 .last-updated {
-  font-size: 0.9rem;
-  color: #888;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
 }
 .no-sensors {
   color: #888;
   font-size: 1.1rem;
   margin-bottom: 2rem;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 0.3em 1em;
+  font-size: 1rem;
+  margin-left: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* Dark theme */
+.App.dark {
+  background: #181c24;
+  color: #e0e6f0;
+}
+.App.dark .App-header {
+  background: linear-gradient(90deg, #232a36 0%, #3a4660 100%);
+  color: #e0e6f0;
+  border-bottom: 1px solid #232a36;
+}
+.App.dark .sensor-card {
+  background: #232a36;
+  color: #e0e6f0;
+  box-shadow: 0 2px 12px rgba(30, 40, 60, 0.18);
+}
+.App.dark .sensor-card:hover {
+  box-shadow: 0 4px 20px rgba(30, 40, 60, 0.28);
+}
+.App.dark .temp {
+  color: #ff7675;
+}
+.App.dark .humidity {
+  color: #74b9ff;
+}
+.App.dark .last-updated, .App.dark .no-sensors {
+  color: #b2becd;
+}
+.App.dark .theme-toggle {
+  border: 1px solid #e0e6f0;
+  color: #e0e6f0;
+}
+.App.dark .theme-toggle:hover {
+  background: rgba(224,230,240,0.08);
+}
+
+/* Light theme (default) */
+.App.light {
+  background: #f4f6fa;
+  color: #222;
+}
+.App.light .App-header {
+  background: linear-gradient(90deg, #1976d2 0%, #64b5f6 100%);
+  color: #fff;
+}
+.App.light .sensor-card {
+  background: #fff;
+  color: #222;
+}
+.App.light .temp {
+  color: #e53935;
+}
+.App.light .humidity {
+  color: #1976d2;
+}
+.App.light .last-updated, .App.light .no-sensors {
+  color: #888;
+}
+.App.light .theme-toggle {
+  border: 1px solid #fff;
+  color: #fff;
+}
+.App.light .theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
 }
